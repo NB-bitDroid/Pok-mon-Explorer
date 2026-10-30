@@ -1,8 +1,8 @@
 //https://pokeapi.co/
 
-const pokemonDiv = document.getElementById("pokemonCards")
-const enterIdBtn = document.getElementById("enterBtn")
-const showFirst12Cards = document.getElementById("create12Cards")
+const pokemonDiv = document.getElementById("pokemonCards");
+const enterIdBtn = document.getElementById("enterBtn");
+const showFirst12Cards = document.getElementById("create12Cards");
 
 // async function getUser() { 
 //     const response = await fetch( 
@@ -33,18 +33,24 @@ const showFirst12Cards = document.getElementById("create12Cards")
 //         console.log("An error occurred:", error.message); 
 //     } 
 // } 
-create12cards()
+create12cards();
+
 async function create12cards(){
     let num = 1;
     while (num <= 12) {
         await checkPokiApi(num);
         num+=1;
     };
-}
+};
+
+showFirst12Cards.addEventListener("click", function(){
+    pokemonDiv.innerHTML = "";
+    create12cards();
+});
 
 enterIdBtn.addEventListener("click", function(){
     pokemonDiv.innerHTML = "";
-    const pokemonId = (document.getElementById("pokemonID")).value
+    const pokemonId = (document.getElementById("pokemonID")).value;
     checkPokiApi(pokemonId);
     // fetch(`https://pokeapi.co/api/v2/pokemon/${pokemonId.value}`)
     // .then(response => response.json())
