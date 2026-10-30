@@ -17,6 +17,12 @@ p{
     height: 420px;
     width: 190px;
 }
+.card:hover{
+    background-color: rgb(226, 226, 226);
+    img{
+        background-color: white;
+    }
+}
 #cardText{
     padding: 10px;
     padding-left: 15px;
