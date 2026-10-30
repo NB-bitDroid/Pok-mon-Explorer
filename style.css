@@ -3,8 +3,22 @@ img{
     height: auto;
     margin: 0;
     padding: 0;
+    border: 3px solid black;
+}
+p{
+    font-size: 15px;
 }
 .card{
-    margin: 0;
+    margin: 10px;
     padding: 0;
+    display: inline-flex;
+    border: 5px solid black;
+    border-radius: 10px;
+    height: 420px;
+    width: 200px;
+}
+#cardText{
+    padding: 10px;
+    padding-left: 20px;
+    padding-right: 20px;
 }

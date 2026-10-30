@@ -1,8 +1,8 @@
 //https://pokeapi.co/
 
-const pokemonId = document.getElementById("pokemonID")
 const pokemonDiv = document.getElementById("pokemonCards")
 const enterIdBtn = document.getElementById("enterBtn")
+const showFirst12Cards = document.getElementById("create12Cards")
 
 // async function getUser() { 
 //     const response = await fetch( 
@@ -33,21 +33,32 @@ const enterIdBtn = document.getElementById("enterBtn")
 //         console.log("An error occurred:", error.message); 
 //     } 
 // } 
+create12cards()
+async function create12cards(){
+    let num = 1;
+    while (num <= 12) {
+        await checkPokiApi(num);
+        num+=1;
+    };
+}
 
 enterIdBtn.addEventListener("click", function(){
-    checkPokiApi();
+    pokemonDiv.innerHTML = "";
+    const pokemonId = (document.getElementById("pokemonID")).value
+    checkPokiApi(pokemonId);
     // fetch(`https://pokeapi.co/api/v2/pokemon/${pokemonId.value}`)
     // .then(response => response.json())
     // .then(data => createPokemonCards(data))
     // getPokemon()
 });
 
-async function checkPokiApi() {
+
+async function checkPokiApi(pokemonId) {
     try {
-        const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${pokemonId.value}`);
+        const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${pokemonId}`);
         if (!response.ok){
             throw new Error("Unable to get pokemon info sorry :c");
-        }else (getPokemon());
+        }else (getPokemon(pokemonId));
         const data = await response.json();
         console.log(data.name);
     } catch (error) {
@@ -55,14 +66,14 @@ async function checkPokiApi() {
     };
 };
 
-async function getPokemon() {
-    const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${pokemonId.value}`);
+async function getPokemon(pokemonId) {
+    const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${pokemonId}`);
     const data = await response.json();
     createPokemonCards(data);
 };
 
 function createPokemonCards(pokemon){
-    pokemonDiv.innerHTML = "";
+    // pokemonDiv.innerHTML = "";
     pokemonDiv.innerHTML += getElement(pokemon);
     console.log(pokemon);
 };
@@ -70,13 +81,15 @@ function createPokemonCards(pokemon){
 function getElement(data) {
     return `
         <div class="card">
-            <h2>#${data.id}<h2/>
-            <img src="${data.sprites.front_default}" alt="">
-            <h3>${(data.name).charAt(0).toUpperCase() + (data.name.slice(1))}<h3/>
-            <p>${data.types[0].type.name}<p/>
-            <p>HP: ${data.stats[0].base_stat}<p/>
-            <p>Attack: ${data.stats[1].base_stat}<p/>
-            <p>Defence: ${data.stats[2].base_stat}<p/>
+            <div id="cardText">
+                <h2>#${data.id}<h2/>
+                <img src="${data.sprites.front_default}" alt="">
+                <h3>${(data.name).charAt(0).toUpperCase() + (data.name.slice(1))}<h3/>
+                <p>${data.types[0].type.name}<p/>
+                <p>HP: ${data.stats[0].base_stat}<p/>
+                <p>Attack: ${data.stats[1].base_stat}<p/>
+                <p>Defence: ${data.stats[2].base_stat}<p/>
+            </div>
         </div>
         `;
 };
