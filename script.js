@@ -58,7 +58,6 @@ enterIdBtn.addEventListener("click", function(){
     // getPokemon()
 });
 
-
 async function checkPokiApi(pokemonId) {
     try {
         const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${pokemonId}`);
@@ -84,14 +83,23 @@ function createPokemonCards(pokemon){
     console.log(pokemon);
 };
 
+function getTypes(data){
+    allTypes = [];
+    for (typ in data.types){
+        allTypes += data.types[typ].type.name;
+        allTypes += "   ";
+    };
+    return allTypes;
+};
+
 function getElement(data) {
     return `
         <div class="card">
             <div id="cardText">
-                <h2>#${data.id}<h2/>
+                <h2 id="number">#${data.id}<h2/>
                 <img src="${data.sprites.front_default}" alt="">
                 <h3>${(data.name).charAt(0).toUpperCase() + (data.name.slice(1))}<h3/>
-                <p>${data.types[0].type.name}<p/>
+                <p>${getTypes(data)}<p/>
                 <p>HP: ${data.stats[0].base_stat}<p/>
                 <p>Attack: ${data.stats[1].base_stat}<p/>
                 <p>Defence: ${data.stats[2].base_stat}<p/>
