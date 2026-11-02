@@ -87,25 +87,29 @@ function getTypes(data){
     allTypes = [];
     for (typ in data.types){
         allTypes += data.types[typ].type.name;
-        allTypes += "   ";
+        allTypes += " ";
     };
+    
     return allTypes;
+    
 };
 
 function getElement(data) {
     return `
         <div class="card">
             <div id="cardText">
-                <h2 id="number">#${data.id}<h2/>
+                <h2 id="number">#${data.id}</h2>
                 <img src="${data.sprites.front_default}" alt="">
-                <h3>${(data.name).charAt(0).toUpperCase() + (data.name.slice(1))}<h3/>
-                <p>${getTypes(data)}<p/>
-                <p>HP: ${data.stats[0].base_stat}<p/>
-                <p>Attack: ${data.stats[1].base_stat}<p/>
-                <p>Defence: ${data.stats[2].base_stat}<p/>
+                <h3>${(data.name).charAt(0).toUpperCase() + (data.name.slice(1))}</h3>
+                <p>${getTypes(data)}</p>
+                <p>HP: ${data.stats[0].base_stat}</p>
+                <p>Attack: ${data.stats[1].base_stat}</p>
+                <p>Defence: ${data.stats[2].base_stat}</p>
             </div>
         </div>
         `;
 };
+
+pokemonDiv.innerHTML += ``
 
 
