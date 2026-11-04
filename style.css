@@ -4,6 +4,7 @@ img{
     margin: 0;
     padding: 0;
     border: 3px solid black;
+    padding-left: 4px;
 }
 p{
     font-size: 15px;
@@ -15,18 +16,13 @@ p{
     border-radius: 10px;
     height: 420px;
     width: 190px;
+    display: inline-flex;
 }
 .card:hover{
     background-color: rgb(226, 226, 226);
     img{
         background-color: white;
     }
-}
-#pokemonCards{
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    max-width: 0px;
-    margin: 0px;
 }
 #cardText{
     padding: 10px;
@@ -38,5 +34,4 @@ p{
 /*
 width: 800px; margin: auto; container
 place-self: center;: card
-
 */

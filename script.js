@@ -3,6 +3,7 @@
 const pokemonDiv = document.getElementById("pokemonCards");
 const enterIdBtn = document.getElementById("enterBtn");
 const showFirst12Cards = document.getElementById("create12Cards");
+let text = document.getElementById("Text");
 
 // async function getUser() { 
 //     const response = await fetch( 
@@ -59,15 +60,17 @@ enterIdBtn.addEventListener("click", function(){
 });
 
 async function checkPokiApi(pokemonId) {
+    text.innerText = "Loading..."
     try {
         const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${pokemonId}`);
         if (!response.ok){
             throw new Error("Unable to get pokemon info sorry :c");
-        }else (getPokemon(pokemonId));
+        }else (getPokemon(pokemonId), text.innerText = "");
         const data = await response.json();
         console.log(data.name);
     } catch (error) {
         console.log("Error something went wrong sorry:", error.message);
+        text.innerText = "Error Something Went Wrong!"
     };
 };
 
