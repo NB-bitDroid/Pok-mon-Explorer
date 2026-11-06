@@ -3,6 +3,7 @@
 const pokemonDiv = document.getElementById("pokemonCards");
 const enterIdBtn = document.getElementById("enterBtn");
 const showFirst12Cards = document.getElementById("create12Cards");
+const showMoreCards = document.getElementById("loadMore");
 let text = document.getElementById("Text");
 
 // async function getUser() { 
@@ -34,25 +35,54 @@ let text = document.getElementById("Text");
 //         console.log("An error occurred:", error.message); 
 //     } 
 // } 
-create12cards();
+let thing = 13;
+loadNumOfCards(1, 12);
 
-async function create12cards(){
-    let num = 1;
-    while (num <= 12) {
-        await checkPokiApi(num);
-        num+=1;
+async function loadNumOfCards(startId, endId){
+    console.log(endId);
+    console.log(startId);
+
+    if (endId > 10326){
+        endId = 10326;
+        text.innerHTML = "That's all the pokemon probably";
+    };
+    if (startId > 1018 & startId < 1026){
+        endId = 1025;
+    };
+    while (startId <= endId) {
+        await checkPokiApi(startId);
+        startId++;
     };
 };
 
 showFirst12Cards.addEventListener("click", function(){
+    thing = 13;
     pokemonDiv.innerHTML = "";
-    create12cards();
+    loadNumOfCards(1, 12);
+});
+
+showMoreCards.addEventListener("click", function(){
+    if (thing >= 1026 & thing < 10000){
+        thing = 10001;
+    };
+    // if(thing > 1030){
+    //     thing = 10001
+    // }
+    // if(thing > 1025 & thing < 1032){
+    //     thing = 1025
+    // }
+    loadNumOfCards(thing, (Number(thing)+6));
+    thing+=7;
 });
 
 enterIdBtn.addEventListener("click", function(){
     pokemonDiv.innerHTML = "";
-    const pokemonId = (document.getElementById("pokemonID")).value;
+    let pokemonId = (document.getElementById("pokemonID")).value;
+    if (pokemonId >= 1026 & pokemonId < 10000) {
+        pokemonId = 10001;
+    };
     checkPokiApi(pokemonId);
+    thing = Number(pokemonId)+1;
     // fetch(`https://pokeapi.co/api/v2/pokemon/${pokemonId.value}`)
     // .then(response => response.json())
     // .then(data => createPokemonCards(data))
@@ -60,17 +90,17 @@ enterIdBtn.addEventListener("click", function(){
 });
 
 async function checkPokiApi(pokemonId) {
-    text.innerText = "Loading..."
+    text.innerText = "Loading...";
     try {
         const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${pokemonId}`);
         if (!response.ok){
             throw new Error("Unable to get pokemon info sorry :c");
         }else (getPokemon(pokemonId), text.innerText = "");
-        const data = await response.json();
-        console.log(data.name);
+        // const data = await response.json();
+        // console.log(data.name);
     } catch (error) {
         console.log("Error something went wrong sorry:", error.message);
-        text.innerText = "Error Something Went Wrong!"
+        text.innerText = "Error Something Went Wrong!";
     };
 };
 
@@ -83,7 +113,7 @@ async function getPokemon(pokemonId) {
 function createPokemonCards(pokemon){
     // pokemonDiv.innerHTML = "";
     pokemonDiv.innerHTML += getElement(pokemon);
-    console.log(pokemon);
+    // console.log(pokemon);
 };
 
 function getTypes(data){
@@ -113,6 +143,6 @@ function getElement(data) {
         `;
 };
 
-pokemonDiv.innerHTML += ``
+// pokemonDiv.innerHTML += ``;
 
 
