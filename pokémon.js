@@ -1,10 +1,11 @@
-const response = await fetch(`https://pokeapi.co/api/v2/pokemon/1`);
-const data = await response.json();
+export {Pokémon}
+
 class Pokémon {
     static totalCreated = 0;
 
     constructor(data){
         this.id = data.id;
+        this.name = data.name
         this.image = data.sprites.front_default;
         this.types = data.types;
         this.maxHealth = data.stats[0].base_stat;
@@ -53,7 +54,7 @@ class Pokémon {
 
 };
 
-const pokemon = new Pokémon(data)
+// const pokemon = new Pokémon(data)
 // pokemon.health = pokemon.maxHealth
 // console.log(pokemon.health); 
 // console.log(pokemon.healthPercent, "%")
@@ -74,4 +75,4 @@ const pokemon = new Pokémon(data)
 // console.log(pokemon.health); 
 // console.log(pokemon.healthPercent, "%"); 
 // console.log(pokemon.isFainted); 
-console.log(Pokémon.getTotalCreated()); 
+// console.log(Pokémon.getTotalCreated()); 

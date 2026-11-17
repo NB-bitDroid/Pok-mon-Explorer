@@ -1,4 +1,7 @@
+import {Pokémon} from "./pokémon.js"
 //https://pokeapi.co/
+
+
 
 const pokemonDiv = document.getElementById("pokemonCards");
 const enterIdBtn = document.getElementById("enterBtn");
@@ -75,13 +78,13 @@ showMoreCards.addEventListener("click", function(){
     thing+=7;
 });
 
-enterIdBtn.addEventListener("click", function(){
+enterIdBtn.addEventListener("click", async function(){
     pokemonDiv.innerHTML = "";
     let pokemonId = (document.getElementById("pokemonID")).value;
     if (pokemonId >= 1026 & pokemonId < 10000) {
         pokemonId = 10001;
     };
-    checkPokiApi(pokemonId);
+    await checkPokiApi(pokemonId);
     thing = Number(pokemonId)+1;
     // fetch(`https://pokeapi.co/api/v2/pokemon/${pokemonId.value}`)
     // .then(response => response.json())
@@ -89,13 +92,14 @@ enterIdBtn.addEventListener("click", function(){
     // getPokemon()
 });
 
+
 async function checkPokiApi(pokemonId) {
     text.innerText = "Loading...";
     try {
         const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${pokemonId}`);
         if (!response.ok){
             throw new Error("Unable to get pokemon info sorry :c");
-        }else (getPokemon(pokemonId), text.innerText = "");
+        }else (createPokemonCards(await getPokemon(pokemonId)), text.innerText = "");
         // const data = await response.json();
         // console.log(data.name);
     } catch (error) {
@@ -107,19 +111,21 @@ async function checkPokiApi(pokemonId) {
 async function getPokemon(pokemonId) {
     const response = await fetch(`https://pokeapi.co/api/v2/pokemon/${pokemonId}`);
     const data = await response.json();
-    createPokemonCards(data);
+    const pokemon = new Pokémon(data)
+    return pokemon
 };
 
 function createPokemonCards(pokemon){
     // pokemonDiv.innerHTML = "";
     pokemonDiv.innerHTML += getElement(pokemon);
+
     // console.log(pokemon);
 };
 
-function getTypes(data){
-    allTypes = [];
-    for (typ in data.types){
-        allTypes += data.types[typ].type.name;
+function getTypes(data){ //<-- broken right now 
+    let allTypes = [];
+    for (let typs in data.types){
+        allTypes += data.types[typs].type.name;
         allTypes += " ";
     };
     
@@ -132,16 +138,21 @@ function getElement(data) {
         <div class="card">
             <div id="cardText">
                 <h2 id="number">#${data.id}</h2>
-                <img src="${data.sprites.front_default}" alt="">
+                <img src="${data.image}" alt="">
                 <h3>${(data.name).charAt(0).toUpperCase() + (data.name.slice(1))}</h3>
                 <p>${getTypes(data)}</p>
-                <p>HP: ${data.stats[0].base_stat}</p>
-                <p>Attack: ${data.stats[1].base_stat}</p>
-                <p>Defence: ${data.stats[2].base_stat}</p>
+                <p>HP: ${data.health}</p>
+                <p>${data.healthPercent}%</p>
+                <p>Attack: ${data.attackPower}</p>
+                <p>Defence: ${data.defense}</p>
+                <button id="damg">Damage</button>
+                <button id="heal">Heal</button>
+                <button id="rest">Rest</button>
             </div>
         </div>
         `;
 };
+
 
 // pokemonDiv.innerHTML += ``;
 
